@@ -1,9 +1,13 @@
 /* layout */
 .grid-container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 33.33% 33.33% 33.33%;
     background-color: #2196F3;
     padding: 10px;
+    margin: 2.5%;
+    height: 80%;
+    position: absolute;
+    width: 90%;
 }
 
 .category {
@@ -12,4 +16,31 @@
     padding: 20px;
     font-size: 30px;
     text-align: center;
-  }
+}
+
+/* nav bar */
+
+navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+  
+navbar li {
+    float: right;
+}
+  
+navbar li a {
+    display: block;
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    padding: 16px 18px;
+    text-decoration: none;
+}
+  
+navbar li a:hover {
+    background-color: #111;
+}
