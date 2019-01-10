@@ -2,39 +2,31 @@
 // and pushed onto the site's html
 // wolfram api will be used to verify that a solution exists
 // and to find a valid solution
-console.log("scripts loaded")
+
+
+
 // from mdn documentation
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
 // use wolfram api to verify
-function verify(equation) {
-    return true
-}
+function verify(value) {
+    // URL for queries
+    URL = `http://www.wolframalpha.com/queryrecognizer/query.jsp?appid=L3KTPE-UYAAY8W3TG&mode=Default&i=${value}&output=json`
 
-// simple math problems
-function generateSimpleProblem(){
-    max = 50
-    found = false
-    while (found == false){
-        num1 = getRandomInt(max)
-        num2 = getRandomInt(max)
-        equation = `${num1} + ${num2}`
-        found = verify(equation)
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    var request = new XMLHttpRequest();
+
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', 'https://ghibliapi.herokuapp.com/films', true);
+
+    request.onload = function () {
+    // Begin accessing JSON data here
     }
-    return equation
-}
 
-// add equation to html page
-function printSimpleProblem(){
-    console.log("I am trying")
-    problem = generateSimpleProblem()
-    document.getElementById('simple-problem').innerhtml = `Solve ${problem}.`
-}
+    // Send request
+    // request.send();
 
-
-// check for click events
-document.getElementById("simple").onclick = function(e){
-    alert('click');
+    return true
 }
