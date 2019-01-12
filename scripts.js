@@ -63,7 +63,3 @@ function verify(value) {
     });
     return true
 }
-
-console.log("TEST: ")
-verify("12 + 4")
-console.log("TEST END")
