@@ -133,7 +133,7 @@ navbar li a:hover {
 }
 
 /* category colors */
-.flex-container #simple-problem {
+.flex-container #simple-problem, #simple-solution{
     background-color: #FFC6E1;
     padding: 10px;
     margin-left: 5%;

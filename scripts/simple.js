@@ -1,36 +1,29 @@
 // Random math problems will  be generated in this file
 // and pushed onto the site's html
-// wolfram api will be used to verify that a solution exists
-// and to find a valid solution
-console.log("scripts loaded")
-stuff = generateSimpleProblem()
-console.log(stuff)
-// from mdn documentation
-// function getRandomInt(max) {
-//     return Math.floor(Math.random() * Math.floor(max));
-// }
 
-// // use wolfram api to verify
-// function verify(equation) {
-//     return true
-// }
+// track problem to solution
+var solutionDict = {};
 
-// simple math problems
 function generateSimpleProblem(){
     max = 50
     found = false
-    while (found == false){
+    while (found === false){
+        console.log("in while loop")
         num1 = getRandomInt(max)
         num2 = getRandomInt(max)
         // determine random operand
         opNum = getRandomInt(100)
-        op = '+'
+        op = 'plus'
         if (opNum%2 === 0) {
-            op = '-'
+            op = 'minus'
         }
         equation = `${num1} ${op} ${num2}`
-        found = verify(equation)
+        console.log(equation)
+        // found = verify(equation)
+        found = true
+        setTimeout(3000)
     }
+    solutionDict[equation] = solve(equation)
     return equation
 }
 
@@ -38,6 +31,28 @@ function generateSimpleProblem(){
 function printSimpleProblem(){
     problem = generateSimpleProblem()
     document.getElementById('problem-string').innerText = `Solve ${problem}.`
+    
+
+}
+
+function printSimpleSolution(){
+    problem = document.getElementById('problem-string').innerText
+    solution = solutionDict[problem]
+    
+    htmlInput = `<img src="${solution}">`
+
+    // testing purposes
+    htmlInput = `<h2> THIS IS A SOLUTION </h2>`
+    // ends, delete after errors fixed
+    htmlFull = `<div id = "simple-solution">${htmlInput}</div>`
+
+    document.getElementById('results').innerHTML += htmlFull
+}
+
+function hideSimpleSolution() {
+    element = document.getElementById('simple-solution')
+    console.log(element)
+    element.parentNode.removeChild(element)
 }
 
 window.onload = function() {
@@ -45,5 +60,17 @@ window.onload = function() {
     // check for click events
     document.getElementById("simple").onclick = function(e){
         printSimpleProblem()
+    }
+
+    showingSolution = false
+    document.getElementById("show-solution").onclick = function(e){
+        console.log(showingSolution)
+        if (showingSolution === false){
+            printSimpleSolution()
+            showingSolution = true
+        } else {
+            hideSimpleSolution()
+            showingSolution = false
+        }
     }
 }
