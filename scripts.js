@@ -7,6 +7,35 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
+// ex. 6 plus 5 returns 6 + 5
+function makeProblemReadable(problem) {
+    problem = problem.replace(/plus/g, "+")
+    problem = problem.replace(/minus/g, "-")
+    problem = problem.replace(/divided by/g, "/")
+    problem = problem.replace(/multiplied by/g, "*")
+    console.log("making readable")
+    console.log(problem)
+    return problem
+}
+
+// write to file
+function WriteFile(path, solution) {
+    // "c:\\MyFile.txt"
+    var fh = fopen(path , 3); // Open the file for writing
+
+    if(fh!=-1) // If the file has been successfully opened
+    {
+        // var str = "Some text goes here...";
+        fwrite(fh, solution); // Write the string to a file
+        fclose(fh); // Close the file 
+    }
+}
+
+// ucs-2 string to base64 encoded ascii
+function utoa(str) {
+    return window.btoa(unescape(encodeURIComponent(str)));
+}
+
 // use wolfram api to VERIFY
 // Wolfram|Alpha Fast Query Recognizer API 
 async function verify(value) {

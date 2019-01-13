@@ -3,52 +3,67 @@
 
 // track problem to solution
 var solutionDict = {};
- 
 
-function generateSimpleProblem(){
-    max = 50
-    found = false
-    while (found === false){
-        // determine random operand
-        opNum = getRandomInt(100)
-        op = 'plus'
-        if (opNum%2 === 0) {
-            op = 'minus'
-        }
-        // generate numbers
-        num1 = getRandomInt(max)
-        num2 = getRandomInt(max)
-        den1 = getRandomInt(max)
-        den2 = getRandomInt(max)
+// make simple add/subtract equation
+function makeEquation(){
+    // get ints
+    let max = 50
+    let num1 = getRandomInt(max)
+    let num2 = getRandomInt(max)
+    let den1 = getRandomInt(max) + 1
+    let den2 = getRandomInt(max) + 1
 
-        // create equation
-        equation = `${num1} divided by ${den1} ${op} ${num2} divided by ${den2}`
-        console.log(equation)
-        found = verify(equation)
-        console.log(found)
-        // found = true
-        setTimeout(3000)
+    // determine random operand
+    let opNum = getRandomInt(100)
+    let op = 'plus'
+    if (opNum%2 === 0) {
+        op = 'minus'
     }
-    solutionDict[equation] = solve(equation)
+
+    // create equation
+    equation = `${num1} divided by ${den1} ${op} ${num2} divided by ${den2}`
     return equation
 }
 
+async function verifyEquation(eqToVerify) {
+    console.log(eqToVerify)
+
+    let verificationResult = await verify(eqToVerify)
+    console.log(verificationResult)
+    console.log(verificationResult == true)
+    if (verificationResult == true){
+        console.log("I AM TRUE LET ME GOOOOO")
+        return eqToVerify
+    } else {
+        let newResult = await verifyEquation(makeEquation())
+        return newResult
+    }
+}
+
 // add equation to html page
-function printSimpleProblem(){
-    problem = generateSimpleProblem()
+async function printSimpleProblem(){
+    // let problem = await generateSimpleProblem()
+    let problem = await verifyEquation(makeEquation())
+    problem = makeProblemReadable(problem)
     document.getElementById('problem-string').innerText = `Solve ${problem}.`
-    print(solve(problem))
-    solutionDict[problem] = solve(problem)
+    // console.log(await solve(problem))
+    solutionDict[problem] = await solve(problem)
+    console.log(solutionDict[problem])
+    // WriteFile(solutionPath, solutionDict[problem])
+    
 }
 
 function printSimpleSolution(){
-    problem = document.getElementById('problem-string').innerText
-    solution = solutionDict[problem]
-    console.log(solution)
-    htmlInput = `<img src="${solution}">`
-
+    let problem = document.getElementById('problem-string').innerText
+    let solution = solutionDict[problem]
+    // console.log(solution)
+    // let htmlInput = `<img src="${solutionPath}">`
+    // convert solution to base64 string
+    let codedSolution = utoa(solution)
+    console.log(codedSolution)
+    let htmlInput = `<img src="${codedSolution}">`
     // testing purposes
-    htmlInput = `<h2> THIS IS A SOLUTION </h2>`
+    // htmlInput = `<h2> THIS IS A SOLUTION </h2>`
     // ends, delete after errors fixed
     htmlFull = `<div id = "simple-solution">${htmlInput}</div>`
 
