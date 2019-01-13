@@ -2,48 +2,46 @@
 // and pushed onto the site's html
 
 // track problem to solution
-let solutionDict = {};
+var solutionDict = {};
+ 
 
-async function generateSimpleProblem(){
-    console.log("STARTING")
-    let max = 50
-    let found = false
-    let count = 0
-    let equation = '3 plus 5'
-    while (found !== true && count < 5){
-        console.log("**in while loop**")
-        let num1 = getRandomInt(max)
-        let num2 = getRandomInt(max)
+function generateSimpleProblem(){
+    max = 50
+    found = false
+    while (found === false){
         // determine random operand
-        let opNum = getRandomInt(100)
-        let op = 'plus'
+        opNum = getRandomInt(100)
+        op = 'plus'
         if (opNum%2 === 0) {
             op = 'minus'
         }
-        equation = `${num1} ${op} ${num2}`
+        // generate numbers
+        num1 = getRandomInt(max)
+        num2 = getRandomInt(max)
+        den1 = getRandomInt(max)
+        den2 = getRandomInt(max)
+
+        // create equation
+        equation = `${num1} divided by ${den1} ${op} ${num2} divided by ${den2}`
         console.log(equation)
-        // setTimeout(10000)
-        found = await verify(equation)
-        console.log("FOUND")
+        found = verify(equation)
         console.log(found)
         // found = true
-        // found = true
-        // setTimeout(3000)
-        count += 1
+        setTimeout(3000)
     }
     solutionDict[equation] = solve(equation)
     return equation
 }
 
 // add equation to html page
-async function printSimpleProblem(){
-    let problem = await generateSimpleProblem()
+function printSimpleProblem(){
+    problem = generateSimpleProblem()
     document.getElementById('problem-string').innerText = `Solve ${problem}.`
 }
 
 function printSimpleSolution(){
-    let problem = document.getElementById('problem-string').innerText
-    let solution = solutionDict[problem]
+    problem = document.getElementById('problem-string').innerText
+    solution = solutionDict[problem]
     
     htmlInput = `<img src="${solution}">`
 
