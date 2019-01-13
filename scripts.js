@@ -92,3 +92,96 @@ async function solve(value) {
         });
     return solution
 }
+
+
+
+// making equations and pushing to html
+// make simple add/subtract equation
+// generate equations of different levels
+function makeEquation(){
+
+    let max = 100
+    let num = getRandomInt(max)
+    let patterns = 3
+    if (num%patterns == 0) {
+        return pattern1()
+    } 
+    if (num%patterns == 1) {
+        return pattern2()
+    }
+    if (num%patterns == 2) {
+        return pattern3()
+    }
+    return pattern1()
+}
+
+async function verifyEquation(eqToVerify) {
+    console.log(eqToVerify)
+
+    let verificationResult = await verify(eqToVerify)
+    console.log(verificationResult)
+    console.log(verificationResult == true)
+    if (verificationResult == true){
+        console.log("I AM TRUE LET ME GOOOOO")
+        return eqToVerify
+    } else {
+        let newResult = await verifyEquation(makeEquation())
+        return newResult
+    }
+}
+
+// add equation to html page
+async function printSimpleProblem(){
+    // let problem = await generateSimpleProblem()
+    let problem = await verifyEquation(makeEquation())
+    problem = makeProblemReadable(problem)
+    document.getElementById('problem-string').innerText = `Solve ${problem}.`
+    // console.log(await solve(problem))
+    solutionDict[problem] = await solve(problem)
+    console.log(solutionDict[problem])
+    // WriteFile(solutionPath, solutionDict[problem])
+    
+}
+
+function printSimpleSolution(){
+    let problem = document.getElementById('problem-string').innerText
+    let solution = solutionDict[problem]
+    // console.log(solution)
+    // let htmlInput = `<img src="${solutionPath}">`
+    // convert solution to base64 string
+    let codedSolution = utoa(solution)
+    console.log(codedSolution)
+    let htmlInput = `<img src="${codedSolution}">`
+    // testing purposes
+    // htmlInput = `<h2> THIS IS A SOLUTION </h2>`
+    // ends, delete after errors fixed
+    htmlFull = `<div id = "simple-solution">${htmlInput}</div>`
+
+    document.getElementById('results').innerHTML += htmlFull
+}
+
+function hideSimpleSolution() {
+    element = document.getElementById('simple-solution')
+    console.log(element)
+    element.parentNode.removeChild(element)
+}
+
+window.onload = function() {
+    printSimpleProblem()
+    // check for click events
+    document.getElementById("simple").onclick = function(e){
+        printSimpleProblem()
+    }
+
+    showingSolution = false
+    document.getElementById("show-solution").onclick = function(e){
+        console.log(showingSolution)
+        if (showingSolution === false){
+            printSimpleSolution()
+            showingSolution = true
+        } else {
+            hideSimpleSolution()
+            showingSolution = false
+        }
+    }
+}
