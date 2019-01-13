@@ -3,41 +3,44 @@
 
     <head>
         <meta charset="utf-8"/>
-        <title> MATHLAB:equations1 </title>
+        <title> MATHLAB:multiply fractions </title>
         <link rel="stylesheet" type="text/css" href="../styles.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="../scripts/equationsOneVariable.js"></script>
+        <script type="text/javascript" src="../scripts.js"></script>
     </head>
 
     <body>
         <navbar>
             <ul>
-                <li style="float:left"><a class="active title" href="#">mathlab</a></li>
+                <li style="float:left"><a href="../index.html">mathlab</a></li>
                 <li><a href="#saved">saved</a></li>
-                <li><a href="#topics">topics</a></li>
+                <li><a href="../index.html">topics</a></li>
                 <li><a href="#about">about</a></li>
             </ul>
         </navbar>
         
         <div class = "content">
             <div class = "flex-container">
-                <div class = "flex-item">
-                    <div id = "problem">
-                        <h2> Example Problem </h2>
+                <div class = "flex-item" id = "results">
+                    <div id = "simple-problem">
+                        <h2 id = "problem-string"> loading. . . </h2>
                     </div>
                 </div>
 
                 <div class = "flex-item">
                     <ul>
-                        <li><button>show solution</button></li>
-                        <li><button>save</button></li>
+                        <li><button id = "show-solution">show solution</button></li>
+                        <li><button id = "save-element">save</button></li>
                     </ul>
                 </div>
 
                 <div class = "flex-item">
-                    <button class = "big-button">NEW PROBLEM</button>
+                    <button id = "simple" class = "big-button">NEW PROBLEM</button>
                 </div>
             </div>
         </div>
 
-        <script src="../scripts.js"></script>
+        
     </body>
 </html>
