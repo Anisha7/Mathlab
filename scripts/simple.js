@@ -24,33 +24,57 @@ async function generateSimpleProblem(){
     let found = false
     let count = 0
     let equation = '3 plus 5'
-    while ((found !== true) && (count < 5)){
-        console.log("**in while loop**")
-        equation = makeEquation()
-        console.log(equation)
-        // setTimeout(10000)
-        found = await verify(equation)
-        console.log("FOUND")
-        console.log(found)
-        // found = true
-        // found = true
-        // setTimeout(3000)
-        count += 1
-    }
+    // while ((found !== true) && (count < 5)){
+    //     console.log("**in while loop**")
+    //     equation = makeEquation()
+    //     console.log(equation)
+    //     found = await verify(equation)
+    //     console.log("FOUND")
+    //     console.log(found)
+    //     // found = true
+    //     // setTimeout(3000)
+    //     count += 1
+    // }
+    
     solutionDict[equation] = solve(equation)
     return equation
 }
 
+async function verifyEquation(eqToVerify) {
+    // let newEquation = makeEquation()
+    // let verifiedStatus = verify(eqToVerify)
+    // if (verifiedStatus == false) {
+    //     newEquation = makeEquation()
+    //     verifiedStatus = verifyEquation(newEquation)
+    // }
+    console.log(eqToVerify)
+
+    let verificationResult = await verify(eqToVerify)
+    console.log(verificationResult)
+    console.log(verificationResult == true)
+    if (verificationResult == true){
+        console.log("I AM TRUE LET ME GOOOOO")
+        return eqToVerify
+    } else {
+        let newResult = await verifyEquation(makeEquation())
+        return newResult
+    }
+}
+
 // add equation to html page
 async function printSimpleProblem(){
-    let problem = await generateSimpleProblem()
+    // let problem = await generateSimpleProblem()
+    let problem = await verifyEquation(makeEquation())
     document.getElementById('problem-string').innerText = `Solve ${problem}.`
+    // console.log(await solve(problem))
+    solutionDict[problem] = await solve(problem)
+    console.log(solutionDict[problem])
 }
 
 function printSimpleSolution(){
     let problem = document.getElementById('problem-string').innerText
     let solution = solutionDict[problem]
-    
+    // console.log(solution)
     htmlInput = `<img src="${solution}">`
 
     // testing purposes

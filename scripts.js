@@ -29,9 +29,13 @@ async function verify(value) {
                 
                 // if (response.data.query[0].domain === 'math')
                 // found = response.data.query[0].accepted
-                console.log("query accepted value: ")
+                // console.log("query accepted value: ")
                 console.log(response.data.query[0].accepted)
-                return response.data.query[0].accepted
+                // return response.data.query[0].accepted
+                let responseResult = response.data.query[0].accepted
+                if (responseResult == 'true') {
+                    return true
+                }
 
             } else {
                 return false
@@ -44,16 +48,18 @@ async function verify(value) {
 
 // use wolfram api to SOLVE
 // Wolfram|Alpha Simple API
-function solve(value) {
+async function solve(value) {
     let URL = `https://cors-escape.herokuapp.com/http://api.wolframalpha.com/v1/simple?appid=L3KTPE-UYAAY8W3TG&i=${value}%3F`
-    axios({
+    let solution = await axios({
         method:'get',
         url: URL,
         responseType:'text'
       })
         .then(function(response) {
         // response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
+            console.log(response.data)
             return response.data
 
         });
+    return solution
 }

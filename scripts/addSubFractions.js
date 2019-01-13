@@ -37,12 +37,14 @@ function generateSimpleProblem(){
 function printSimpleProblem(){
     problem = generateSimpleProblem()
     document.getElementById('problem-string').innerText = `Solve ${problem}.`
+    print(solve(problem))
+    solutionDict[problem] = solve(problem)
 }
 
 function printSimpleSolution(){
     problem = document.getElementById('problem-string').innerText
     solution = solutionDict[problem]
-    
+    console.log(solution)
     htmlInput = `<img src="${solution}">`
 
     // testing purposes
