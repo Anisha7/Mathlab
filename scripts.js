@@ -9,10 +9,11 @@ function getRandomInt(max) {
 
 // ex. 6 plus 5 returns 6 + 5
 function makeProblemReadable(problem) {
+    console.log(problem)
     problem = problem.replace(/plus/g, "+")
     problem = problem.replace(/minus/g, "-")
     problem = problem.replace(/divided by/g, "/")
-    problem = problem.replace(/multiplied by/g, "*")
+    problem = problem.replace(/multiplied by/g, "x")
     console.log("making readable")
     console.log(problem)
     return problem

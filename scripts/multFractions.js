@@ -30,4 +30,5 @@ function pattern3() {
     let eq1 = pattern2()
     let eq2 = pattern1()
     let equation = `(${eq1}) +    ${op}    + (${eq2})`
+    return equation
 }
