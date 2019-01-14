@@ -1,6 +1,15 @@
 // wolfram api will be used to verify that a solution exists
 // and to find a valid solution
 
+function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+ }
 
 // from mdn documentation
 function getRandomInt(max) {
@@ -83,7 +92,7 @@ async function solve(value) {
     let solution = await axios({
         method:'get',
         url: URL,
-        responseType:'text'
+        responseType:'arraybuffer'
       })
         .then(function(response) {
         // response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
@@ -139,20 +148,31 @@ async function printSimpleProblem(){
     document.getElementById('problem-string').innerText = `Solve ${problem}.`
     // console.log(await solve(problem))
     solutionDict[problem] = await solve(problem)
+    console.log("PRINTING IN PROBLEM CREATION")
     console.log(solutionDict[problem])
     // WriteFile(solutionPath, solutionDict[problem])
     
 }
 
 function printSimpleSolution(){
-    let problem = document.getElementById('problem-string').innerText
-    let solution = solutionDict[problem]
+    console.log("print simple solution function")
+    //let problem = (document.getElementById('problem-string').innerText).replace('Solve ', '')
+    //console.log(problem)
+    let problem = Object.keys(solutionDict)
+    // console.log(solutionDict)
+    // console.log(problem)
+    let solution = solutionDict[problem[0]]
+    // solution = _arrayBufferToBase64(solution)
+    // console.log(solutionDict[problem])
     // console.log(solution)
     // let htmlInput = `<img src="${solutionPath}">`
     // convert solution to base64 string
-    let codedSolution = utoa(solution)
+    console.log("PRINTING IN SIMPLE SOLUTION")
+    console.log(solution)
+    let codedSolution = _arrayBufferToBase64(solution)
+    
     console.log(codedSolution)
-    let htmlInput = `<img src="${codedSolution}">`
+    let htmlInput = `<img src="data:image/gif;base64, ${codedSolution}">`
     // testing purposes
     // htmlInput = `<h2> THIS IS A SOLUTION </h2>`
     // ends, delete after errors fixed
