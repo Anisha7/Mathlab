@@ -20,6 +20,8 @@ function getRandomInt(max) {
 // ex. 6 plus 5 returns 6 + 5
 function makeProblemReadable(problem) {
     console.log(problem)
+    console.log(typeof(problem))
+    
     problem = problem.replace(/plus/g, "+")
     problem = problem.replace(/minus/g, "-")
     problem = problem.replace(/divided by/g, "/")
@@ -27,6 +29,7 @@ function makeProblemReadable(problem) {
     console.log("making readable")
     console.log(problem)
     return problem
+    
 }
 
 // write to file
@@ -171,8 +174,8 @@ function printSimpleSolution(){
     dkey = dkey.replace('.','')
     
 
-    solution = solutionDict[dkey]
-    solution = solutionDict[Object.keys(solutionDict)[0]]
+    // solution = solutionDict[dkey]
+    // solution = solutionDict[Object.keys(solutionDict)[0]]
     solution = SOLVEDthing
     // solution = _arrayBufferToBase64(solution)
     // console.log(solutionDict[problem])
@@ -197,8 +200,10 @@ function printSimpleSolution(){
 function hideSimpleSolution() {
     element = document.getElementById('simple-solution')
     console.log(element)
+    
     element.parentNode.removeChild(element)
     document.getElementById('show-solution').innerText = "show solution"
+    
 }
 
 window.onload = function() {
@@ -207,8 +212,10 @@ window.onload = function() {
     // check for click events
     document.getElementById("simple").onclick = function(e){
         SOLVEDthing = ''
-        hideSimpleSolution()
-        showingSolution = false
+        if (showingSolution == true){
+            hideSimpleSolution()
+            showingSolution = false
+        }
         printSimpleProblem()
     }
 
