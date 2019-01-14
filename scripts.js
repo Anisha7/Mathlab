@@ -159,12 +159,14 @@ function printSimpleSolution(){
     htmlFull = `<div id = "simple-solution">${htmlInput}</div>`
 
     document.getElementById('results').innerHTML += htmlFull
+    document.getElementById('show-solution').innerText = "hide solution"
 }
 
 function hideSimpleSolution() {
     element = document.getElementById('simple-solution')
     console.log(element)
     element.parentNode.removeChild(element)
+    document.getElementById('show-solution').innerText = "show solution"
 }
 
 window.onload = function() {
