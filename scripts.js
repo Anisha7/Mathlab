@@ -1,5 +1,6 @@
 // wolfram api will be used to verify that a solution exists
 // and to find a valid solution
+let SOLVEDthing = ''
 
 function _arrayBufferToBase64( buffer ) {
     var binary = '';
@@ -49,6 +50,7 @@ function utoa(str) {
 // use wolfram api to VERIFY
 // Wolfram|Alpha Fast Query Recognizer API 
 async function verify(value) {
+    return true
     console.log("verifying")
     // URL for queries
     let URL = `https://cors-escape.herokuapp.com/http://www.wolframalpha.com/queryrecognizer/query.jsp?appid=L3KTPE-UYAAY8W3TG&mode=Default&i=${value}&output=json`
@@ -88,6 +90,8 @@ async function verify(value) {
 // use wolfram api to SOLVE
 // Wolfram|Alpha Simple API
 async function solve(value) {
+    console.log("SOLVING")
+    console.log(value)
     let URL = `https://cors-escape.herokuapp.com/http://api.wolframalpha.com/v1/simple?appid=L3KTPE-UYAAY8W3TG&i=${value}%3F`
     let solution = await axios({
         method:'get',
@@ -144,24 +148,32 @@ async function verifyEquation(eqToVerify) {
 async function printSimpleProblem(){
     // let problem = await generateSimpleProblem()
     let problem = await verifyEquation(makeEquation())
-    problem = makeProblemReadable(problem)
-    document.getElementById('problem-string').innerText = `Solve ${problem}.`
+    
     // console.log(await solve(problem))
+    
+
+    temp = makeProblemReadable(problem)
+    document.getElementById('problem-string').innerText = `Solve ${temp}.`
+    // WriteFile(solutionPath, solutionDict[problem])
+
     solutionDict[problem] = await solve(problem)
+    SOLVEDthing = solutionDict[problem]
     console.log("PRINTING IN PROBLEM CREATION")
     console.log(solutionDict[problem])
-    // WriteFile(solutionPath, solutionDict[problem])
     
 }
 
 function printSimpleSolution(){
     console.log("print simple solution function")
     //let problem = (document.getElementById('problem-string').innerText).replace('Solve ', '')
-    //console.log(problem)
-    let problem = Object.keys(solutionDict)
-    // console.log(solutionDict)
-    // console.log(problem)
-    let solution = solutionDict[problem[0]]
+    let dkey = document.getElementById('problem-string').innerText
+    dkey = dkey.replace('Solve ', '')
+    dkey = dkey.replace('.','')
+    
+
+    solution = solutionDict[dkey]
+    solution = solutionDict[Object.keys(solutionDict)[0]]
+    solution = SOLVEDthing
     // solution = _arrayBufferToBase64(solution)
     // console.log(solutionDict[problem])
     // console.log(solution)
@@ -190,13 +202,16 @@ function hideSimpleSolution() {
 }
 
 window.onload = function() {
+    let showingSolution = false
     printSimpleProblem()
     // check for click events
     document.getElementById("simple").onclick = function(e){
+        SOLVEDthing = ''
+        hideSimpleSolution()
+        showingSolution = false
         printSimpleProblem()
     }
 
-    showingSolution = false
     document.getElementById("show-solution").onclick = function(e){
         console.log(showingSolution)
         if (showingSolution === false){
